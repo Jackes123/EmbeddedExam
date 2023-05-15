@@ -10,7 +10,7 @@ ExitLEDPin = 19
 Maximum = 5
 
 # setup function for initialization
-def RelaySetup():
+def Setup():
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM) # set the GPIO modes to BCM numbering
     GPIO.setup(EntryLEDPin, GPIO.OUT, initial=GPIO.LOW)  # setup entry LED pin
@@ -31,7 +31,7 @@ def MaxLimitDo():
     print("\nRelay is shut down")
     print("\nWarning: Maximum limit reached!")
     turn_on_led()
-
+    
 
 def main():
 
@@ -39,42 +39,42 @@ def main():
     exit_counter = 0
     total_counter = 0
 
-    RelaySetup()
+    Setup()
 
-    while True:
-        # simulate a sensor reading
-        entry_sensor_reading = get_entry_sensor_reading()
-        exit_sensor_reading = get_exit_sensor_reading()
+    try:
+        while True:
+            # simulate a sensor reading
+            entry_sensor_reading = get_entry_sensor_reading()
+            exit_sensor_reading = get_exit_sensor_reading()
 
-        print("______________________________________________________")
+            print("______________________________________________________")
     
-        print("\nMaximum people allowed in this building:", Maximum)
+            print("\nMaximum people allowed in this building:", Maximum)
 
-        if entry_sensor_reading:
-            entry_counter += 1  # increment the counter
-            total_counter += 1  # increment the total counter
-            print("\nPerson detected at entry. Counter:", entry_counter)
+            if entry_sensor_reading:
+                entry_counter += 1  # increment the counter
+                total_counter += 1  # increment the total counter
+                print("\nPerson detected at entry. Counter:", entry_counter)
 
-            # check if the counter exceeds 5
-            if total_counter >= Maximum:
-                MaxLimitDo()
+                # check if the counter exceeds 5
+                if total_counter >= Maximum:
+                    MaxLimitDo()
 
-        if exit_sensor_reading:
-            exit_counter += 1  # increment the exit counter
-            total_counter -= 1  # decrement the total counter
-            print("\nPerson detected at exit. Exit Counter:", exit_counter)
+            if exit_sensor_reading:
+               exit_counter += 1  # increment the exit counter
+#               total_counter -= 1  # decrement the total counter
+#                print("\nPerson detected at exit. Exit Counter:", exit_counter)
 
-        if total_counter <= Maximum:
-            turn_off_led()
+            print("\nTotal Counter:", total_counter)
 
+            #Sluk LED igen hvis den er under max
+            if total_counter < Maximum:
+                turn_off_led()
 
+            time.sleep(1)  # wait for a short duration between readings
 
-        print("\nTotal Counter:", total_counter)
-
-
-    time.sleep(1)  # wait for a short duration between readings
-
-
+    except KeyboardInterrupt:
+        GPIO.cleanup()
 
 # function to simulate an entry sensor reading (replace this with your actual sensor code)
 def get_entry_sensor_reading():
