@@ -2,9 +2,10 @@ import RPi.GPIO as GPIO
 import time
 
 
-RelayPin = 17 # set GPIO 17 to relay
+RelayPin = 22 # set GPIO 17 to relay
 EntryLEDPin = 14 # set GPIO led pins
 ExitLEDPin = 23
+##
 
 #Maximum people allowed
 Maximum = 5
