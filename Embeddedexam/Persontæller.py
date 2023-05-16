@@ -63,7 +63,7 @@ def main():
             if exit_sensor_reading:
                exit_counter += 1  # increment the exit counter
 #               total_counter -= 1  # decrement the total counter
-#                print("\nPerson detected at exit. Exit Counter:", exit_counter)
+#               print("\nPerson detected at exit. Exit Counter:", exit_counter)
 
             print("\nTotal Counter:", total_counter)
 
