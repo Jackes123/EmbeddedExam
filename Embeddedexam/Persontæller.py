@@ -4,7 +4,7 @@ import time
 
 RelayPin = 17 # set GPIO 17 to relay
 EntryLEDPin = 14 # set GPIO led pins
-ExitLEDPin = 19 
+ExitLEDPin = 23
 
 #Maximum people allowed
 Maximum = 5
