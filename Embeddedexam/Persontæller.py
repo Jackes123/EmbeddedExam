@@ -5,7 +5,14 @@ import time
 RelayPin = 22 # set GPIO 17 to relay
 EntryLEDPin = 14 # set GPIO led pins
 ExitLEDPin = 23
-##
+
+#Entry sensor
+TrigEntry = 4
+EchoEntry = 27
+
+#Exit sensor
+TrigExit = 18
+EchoEntry = 24
 
 #Maximum people allowed
 Maximum = 5
@@ -71,6 +78,7 @@ def main():
             #Sluk LED igen hvis den er under max
             if total_counter < Maximum:
                 turn_off_led()
+                GPIO.setup(RelayPin, GPIO.OUT, initial=GPIO.HIGH)
 
             time.sleep(1)  # wait for a short duration between readings
 
