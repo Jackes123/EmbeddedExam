@@ -1,6 +1,7 @@
 import RPi.GPIO as GPIO
 import time
 
+#TEST#
 
 RelayPin = 22 # set GPIO 17 to relay
 EntryLEDPin = 14 # set GPIO led pins
