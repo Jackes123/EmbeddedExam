@@ -1,8 +1,5 @@
 import RPi.GPIO as GPIO
 import time
-import sys
-
-
 
 RelayPin = 22 # set GPIO 17 to relay
 EntryLEDPin = 14 # set GPIO led pins
@@ -45,17 +42,20 @@ def turn_off_led():
 def MaxLimitDo():
     GPIO.output(RelayPin, GPIO.LOW)  # set relay pin to LOW (shut down)
     print("\nRelay is shut down", end = "\r")
-    sys.stdout.flush()
     print("\nWarning: Maximum limit reached!", end = "\r")
-    sys.stdout.flush()
     turn_on_led()
     
+def RegPrint():
+    print("\n______________________________________________________", end = "\r")
+    print("\nMaximum people allowed in this building:", Maximum, end = "\r")
+ 
 
 def Get_distance(trig_pin,echo_pin):
     #Send pulse
     GPIO.output (trig_pin, GPIO.HIGH)
     time.sleep(0.00001)
     GPIO.output (trig_pin, GPIO.LOW)
+
 
     pulse_start = time.time()
     
@@ -74,6 +74,8 @@ def Get_distance(trig_pin,echo_pin):
 
     return distance    
 
+
+
 def main():
 
     #entry_counter = 0
@@ -88,30 +90,30 @@ def main():
             entry_sensor_reading = Get_distance(TrigEntry, EchoEntry)
             exit_sensor_reading = Get_distance(TrigExit, EchoExit)
 
-            print("______________________________________________________")
-            sys.stdout.flush()
+            #print("______________________________________________________")
+            
     
-            print("\nMaximum people allowed in this building:", Maximum, end = "\r")
-            sys.stdout.flush()
+            #print("\nMaximum people allowed in this building:", Maximum, end = "\r")
+            
 
             if entry_sensor_reading < EntryThreshold:
                 #entry_counter += 1  # increment the counter
                 total_counter += 1  # increment the total counter
                 #print("\nPerson detected at entry. Counter:", entry_counter,"\r")
-                sys.stdout.flush()
+                RegPrint()
+                print("\nTotal Counter:", total_counter, end = "\r")
 
                 # check if the counter exceeds 5
                 if total_counter >= Maximum:
                     MaxLimitDo()
 
             if exit_sensor_reading < ExitThrehold:
-               #exit_counter += 1  # increment the exit counter
-               total_counter -= 1  # decrement the total counter
-               #print("\nPerson detected at exit. Exit Counter:", exit_counter,"\r")
-               sys.stdout.flush()
-
-            print("\nTotal Counter:", total_counter, end = "\r")
-            sys.stdout.flush()
+                #exit_counter += 1  # increment the exit counter
+                total_counter -= 1  # decrement the total counter
+                #print("\nPerson detected at exit. Exit Counter:", exit_counter,"\r")
+                RegPrint()
+                print("\nTotal Counter:", total_counter, end = "\r")
+            
 
             #Sluk LED igen hvis den er under max
             if total_counter < Maximum:

@@ -21,6 +21,7 @@ ExitThrehold = 10
 #Maximum people allowed
 Maximum = 5
 
+
 # setup function for initialization
 def Setup():
     GPIO.setwarnings(False)
@@ -47,6 +48,10 @@ def MaxLimitDo():
     print("\nRelay is shut down", end = "\r")
     print("\nWarning: Maximum limit reached!", end = "\r")
     turn_on_led()
+
+def RegPrint():
+    print("\n______________________________________________________", end = "\r")
+    print("\nMaximum people allowed in this building:", Maximum, end = "\r")
     
 
 def Get_distance(trig_pin,echo_pin):
@@ -99,10 +104,9 @@ def main():
                 #entry_counter += 1  # increment the counter
                 total_counter += 1  # increment the total counter
                 #print("\nPerson detected at entry. Counter:", entry_counter,"\r")
+                RegPrint()
+                print("\nTotal Counter:", total_counter, end = "\r")
 
-                print("______________________________________________________", end = "\r")
-
-                print("\nMaximum people allowed in this building:", Maximum, end = "\r")
 
                 # check if the counter exceeds 5
                 if total_counter >= Maximum:
@@ -110,11 +114,11 @@ def main():
 
 
             if exit_sensor_reading < ExitThrehold:
-               #exit_counter += 1  # increment the exit counter
-               total_counter -= 1  # decrement the total counter
-               #print("\nPerson detected at exit. Exit Counter:", exit_counter,"\r")
-               
-            print("\nTotal Counter:", total_counter, end = "\r")
+                #exit_counter += 1  # increment the exit counter
+                total_counter -= 1  # decrement the total counter
+                #print("\nPerson detected at exit. Exit Counter:", exit_counter,"\r")
+                RegPrint()
+                print("\nTotal Counter:", total_counter, end = "\r")
             
 
             #Sluk LED igen hvis den er under max
