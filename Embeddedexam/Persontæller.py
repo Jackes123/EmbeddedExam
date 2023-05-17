@@ -90,12 +90,6 @@ def main():
             entry_sensor_reading = Get_distance(TrigEntry, EchoEntry)
             exit_sensor_reading = Get_distance(TrigExit, EchoExit)
 
-            #print("______________________________________________________")
-            
-    
-            #print("\nMaximum people allowed in this building:", Maximum, end = "\r")
-            
-
             if entry_sensor_reading < EntryThreshold:
                 #entry_counter += 1  # increment the counter
                 total_counter += 1  # increment the total counter
